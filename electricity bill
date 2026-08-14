@@ -1,0 +1,276 @@
+Index.php
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electricity Bill Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400; 500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+<div class="card-header">
+<div class="icon-badge">⚡</div>
+<h1>Electricity Bill Calculator</h1>
+<p class="subtitle">Calculate your monthly energy bill instantly</p>
+</div>
+
+<form id="bill-form" novalidate>
+<div class="form-group">
+<label for="units">Total Units Consumed (kWh)</label>
+<input
+type="number" id="units" name="units" min="0" step="1"
+placeholder="e.g. 175" required autocomplete="off"
+>
+</div>
+<button type="submit" id="submit-btn">
+<span>Calculate Bill</span>
+</button>
+</form>
+
+<div id="result" class="result-box hidden">
+<h2>Bill Summary</h2>
+<div class="total-row">
+<span class="label">Total Amount Payable:</span>
+<span id="total-bill" class="amount">--</span>
+</div>
+</div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
+
+script.js
+
+document.addEventListener('DOMContentLoaded', () => { const form = document.getElementById('bill-form'); const unitsInput = document.getElementById('units');
+const submitBtn = document.getElementById('submit-btn'); const resultDiv = document.getElementById('result');
+const totalBillSpan = document.getElementById('total-bill'); if (!form) return;
+form.addEventListener('submit', async (e) => { e.preventDefault();
+
+const unitsValue = unitsInput.value.trim();
+
+ 
+
+0) {
+ 
+if (unitsValue === '' || isNaN(unitsValue) || Number(unitsValue) <
+
+alert('Please enter a valid positive number of units.'); unitsInput.focus();
+return;
+ 
+}
+
+// Set button loading state
+const originalBtnText = submitBtn.innerHTML; submitBtn.disabled = true;
+submitBtn.innerHTML = '<span>Calculating...</span>';
+
+try {
+const formData = new FormData(); formData.append('units', unitsValue);
+
+const response = await fetch('calculate.php', { method: 'POST',
+body: formData
+});
+
+if (!response.ok) {
+throw new Error(`Server returned HTTP status
+${response.status}`);
+}
+
+Style.css
+
+:root {
+--bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%,
+#311042 100%);
+--card-bg: rgba(255, 255, 255, 0.96);
+--primary-color: #4f46e5;
+--primary-hover: #4338ca;
+--accent-color: #10b981;
+--text-primary: #1e293b;
+--text-secondary: #64748b;
+--border-color: #e2e8f0;
+--radius: 16px;
+--shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px
+rgba(0, 0, 0, 0.2);
+--transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+box-sizing: border-box; margin: 0;
+padding: 0;
+}
+
+body {
+font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+background: var(--bg-gradient); min-height: 100vh;
+display: flex;
+justify-content: center; align-items: center; padding: 1.5rem;
+color: var(--text-primary);
+}
+
+.container {
+background: var(--card-bg); padding: 2.5rem;
+border-radius: var(--radius); box-shadow: var(--shadow);
+ 
+max-width: 440px; width: 100%;
+backdrop-filter: blur(12px);
+border: 1px solid rgba(255, 255, 255, 0.2); transition: var(--transition);
+}
+
+.card-header {
+text-align: center; margin-bottom: 2rem;
+}
+
+.icon-badge {
+display: inline-flex; align-items: center; justify-content: center; width: 52px;
+height: 52px; background: #e0e7ff;
+color: var(--primary-color); font-size: 1.75rem;
+border-radius: 50%; margin-bottom: 0.75rem;
+box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+}
+
+ 
+h1 {
+
+
+
+
+
+
+
+}
+ 
+
+font-size: 1.5rem; font-weight: 700;
+color: var(--text-primary); letter-spacing: -0.02em; margin-bottom: 0.35rem;
+ 
+
+.subtitle {
+font-size: 0.875rem;
+color: var(--text-secondary);
+}
+
+form {
+ 
+display: flex;
+flex-direction: column; gap: 1.25rem;
+}
+
+.form-group {
+display: flex;
+flex-direction: column; gap: 0.5rem;
+}
+
+label {
+font-size: 0.875rem; font-weight: 600;
+color: var(--text-primary);
+}
+
+input[type="number"] { width: 100%;
+padding: 0.875rem 1rem; font-size: 1rem;
+font-family: inherit; color: var(--text-primary); background-color: #f8fafc;
+border: 1.5px solid var(--border-color); border-radius: 10px;
+outline: none;
+transition: var(--transition);
+}
+
+input[type="number"]:focus { background-color: #fff;
+border-color: var(--primary-color);
+box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+
+button {
+width: 100%; padding: 0.875rem;
+background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+ 
+color: #ffffff;
+font-family: inherit; font-size: 1rem;
+font-weight: 600; border: none;
+border-radius: 10px; cursor: pointer;
+box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); transition: var(--transition);
+}
+
+button:hover {
+transform: translateY(-2px);
+box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+}
+
+button:active {
+transform: translateY(0);
+}
+
+button:disabled { opacity: 0.7; cursor: not-allowed; transform: none;
+}
+
+.result-box {
+margin-top: 1.75rem; padding: 1.25rem; background: #f0fdf4;
+border: 1.5px solid #bbf7d0; border-radius: 12px; opacity: 1;
+transform: translateY(0); transition: var(--transition);
+}
+
+.result-box.hidden { display: none; opacity: 0;
+ 
+transform: translateY(10px);
+}
+
+.result-box h2 {
+font-size: 0.875rem;
+text-transform: uppercase; letter-spacing: 0.05em; color: #166534;
+margin-bottom: 0.5rem; font-weight: 700;
+}
+
+.total-row {
+display: flex;
+justify-content: space-between; align-items: center;
+}
+
+.total-row .label { font-size: 0.95rem; font-weight: 500; color: #15803d;
+}
+
+.total-row .amount { font-size: 1.35rem; font-weight: 700; color: #15803d;
+}
+
+@media (max-width: 480px) {
+.container {
+padding: 1.75rem;
+}
+}
+
+Calculate.php
+ 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+echo json_encode(['error' => 'Invalid request method']); exit;
+}
+
+$raw_units = $_POST['units'] ?? null;
+
+if (!isset($raw_units) || !is_numeric($raw_units) || $raw_units < 0) { echo json_encode(['error' => 'Please enter a valid positive number of
+units.']);
+exit;
+}
+
+$units = (float)$raw_units;
+$bill = 0;
+
+if ($units > 0) {
+if ($units <= 50) {
+$bill = $units * 3.50;
+} elseif ($units <= 150) {
+$bill = (50 * 3.50) + (($units - 50) * 4.00);
+} elseif ($units <= 250) {
+$bill = (50 * 3.50) + (100 * 4.00) + (($units - 150) * 5.20);
+} else {
+$bill = (50 * 3.50) + (100 * 4.00) + (100 * 5.20) + (($units -
+250) * 6.50);
+}
+}
+
+echo json_encode([ 'success' => true, 'units'	=> $units,
+'bill'	=> number_format($bill, 2)
+]);
+
+ 
+
