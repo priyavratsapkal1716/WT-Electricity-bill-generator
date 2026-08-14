@@ -1,0 +1,37 @@
+script.js
+
+document.addEventListener('DOMContentLoaded', () => { const form = document.getElementById('bill-form'); const unitsInput = document.getElementById('units');
+const submitBtn = document.getElementById('submit-btn'); const resultDiv = document.getElementById('result');
+const totalBillSpan = document.getElementById('total-bill'); if (!form) return;
+form.addEventListener('submit', async (e) => { e.preventDefault();
+
+const unitsValue = unitsInput.value.trim();
+
+ 
+
+0) {
+ 
+if (unitsValue === '' || isNaN(unitsValue) || Number(unitsValue) <
+
+alert('Please enter a valid positive number of units.'); unitsInput.focus();
+return;
+ 
+}
+
+// Set button loading state
+const originalBtnText = submitBtn.innerHTML; submitBtn.disabled = true;
+submitBtn.innerHTML = '<span>Calculating...</span>';
+
+try {
+const formData = new FormData(); formData.append('units', unitsValue);
+
+const response = await fetch('calculate.php', { method: 'POST',
+body: formData
+});
+
+if (!response.ok) {
+throw new Error(`Server returned HTTP status
+${response.status}`);
+}
+ 
+ 

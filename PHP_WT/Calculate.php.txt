@@ -1,0 +1,32 @@
+Calculate.php
+ 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+echo json_encode(['error' => 'Invalid request method']); exit;
+}
+
+$raw_units = $_POST['units'] ?? null;
+
+if (!isset($raw_units) || !is_numeric($raw_units) || $raw_units < 0) { echo json_encode(['error' => 'Please enter a valid positive number of
+units.']);
+exit;
+}
+
+$units = (float)$raw_units;
+$bill = 0;
+
+if ($units > 0) {
+if ($units <= 50) {
+$bill = $units * 3.50;
+} elseif ($units <= 150) {
+$bill = (50 * 3.50) + (($units - 50) * 4.00);
+} elseif ($units <= 250) {
+$bill = (50 * 3.50) + (100 * 4.00) + (($units - 150) * 5.20);
+} else {
+$bill = (50 * 3.50) + (100 * 4.00) + (100 * 5.20) + (($units -
+250) * 6.50);
+}
+}
+
+echo json_encode([ 'success' => true, 'units'	=> $units,
+'bill'	=> number_format($bill, 2)
+]);
